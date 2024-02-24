@@ -6,3 +6,25 @@ datasource db {
     provider = "mongodb"
     url      = env("DATABASE_URL")
 }
+model User {
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    name  String?
+    email String @unique 
+    image String?
+    bookvisits Json[]
+    favResidenceid String[] db.ObjectId[]
+}
+model Residence {
+    id    String @id @default(auto()) @map("_id") @db.ObjectId
+    name  String
+    address String
+    city String
+    country String
+    image String
+    description String
+    price Int
+    ownerid String @db.ObjectId
+    owner User @relation(fields: [ownerid], references: [id])
+    bookvisits Json[]
+}
+```
